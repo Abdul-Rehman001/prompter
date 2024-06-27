@@ -1,10 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
   experimental: {
     serverComponentsExternalPackages: ["mongoose"],
   },
   images: {
-    domains: ["lh3.googleusercontent.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        port: "",
+        pathname: "/**",
+      },
+      // Add other patterns as needed
+    ],
   },
   webpack(config) {
     config.experiments = {
@@ -13,6 +22,7 @@ const nextConfig = {
     };
     return config;
   },
+  output: "standalone",
 };
 
 export default nextConfig;
