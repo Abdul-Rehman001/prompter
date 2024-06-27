@@ -139,15 +139,12 @@ const Feed = () => {
           className="search_input peer"
         />
       </form>
-      <p className="font-semibold text-sm flex justify-center align-middle text-emerald-900/50">
+      <p className="font-semibold text-sm flex justify-center align-middle text-emerald-900/50 block">
         Scroll down to test your prompt or Click here
         <a
           className="text-emerald-700 font-bold px-2"
           href="https://chatgpt.com/"
-        >
-          {" "}
-          ChatGpt
-        </a>
+        >ChatGpt</a>
       </p>
 
       {/* All Prompts */}
