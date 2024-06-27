@@ -10,17 +10,24 @@ export const connectToDB = async () => {
     return;
   }
 
+  if (!process.env.MONGODB_URI) {
+    console.error("MONGODB_URI is not defined");
+    return;
+  }
+
   try {
-    await mongoose.connect(process.env.MONGODB_URL, {
+    const conn = await mongoose.connect(process.env.MONGODB_URI, {
       dbName: "share_prompt",
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
     });
 
     isConnected = true;
 
-    console.log("MongoDB connected");
+    console.log(`MongoDB connected: ${conn.connection.host}`);
   } catch (error) {
-    console.log(error);
+    console.error("Error connecting to MongoDB:", error.message);
+    process.exit(1);
   }
 };
