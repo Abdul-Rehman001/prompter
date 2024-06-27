@@ -1,9 +1,7 @@
 "use client";
-import "boxicons";
 import { useState, useEffect } from "react";
 import PromptCard from "./PromptCard";
 import Loader from "./Loader";
-
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
     <div className="mt-16 prompt_layout">

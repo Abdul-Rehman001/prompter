@@ -1,8 +1,6 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router"; // Use 'next/router' instead of 'next/navigation'
 
 import Profile from "@components/Profile";
 
@@ -10,17 +8,27 @@ const MyProfile = () => {
   const { data: session } = useSession();
   const [posts, setPosts] = useState([]);
   const router = useRouter();
+
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch(`/api/users/${session?.user.id}/posts`);
-      const data = await response.json();
-      console.log("Fetched posts:", data);
-
-      setPosts(data);
+      if (typeof window !== "undefined" && session?.user?.id) {
+        try {
+          const response = await fetch(`/api/users/${session.user.id}/posts`);
+          if (!response.ok) {
+            throw new Error("Failed to fetch posts");
+          }
+          const data = await response.json();
+          console.log("Fetched posts:", data);
+          setPosts(data);
+        } catch (error) {
+          console.error("Error fetching posts:", error);
+        }
+      }
     };
 
-    if (session?.user.id) fetchPosts();
-  }, []);
+    fetchPosts();
+  }, [session]);
+
   const handleEdit = (post) => {
     router.push(`/update-prompt?id=${post._id}`);
   };
@@ -37,10 +45,9 @@ const MyProfile = () => {
         });
 
         const filteredPosts = posts.filter((p) => p._id !== post._id);
-
         setPosts(filteredPosts);
       } catch (error) {
-        console.log(error);
+        console.error("Error deleting post:", error);
       }
     }
   };

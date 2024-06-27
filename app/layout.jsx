@@ -1,12 +1,11 @@
 import "@styles/globals.css";
 import { Children } from "react";
-import { Metadata } from "next";
 
 import Nav from "@components/Nav.jsx";
 import Provider from "@components/Provider.jsx";
 
 export const metadata = {
-  tittle: "promptoper",
+  title: "promptoper",
   description: "Discover the best prompts around the web & share AI prompts",
   icons: "/assets/images/logo.svg",
 };
