@@ -13,11 +13,13 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
   const [copied, setCopied] = useState("");
 
   const handleProfileClick = () => {
-    console.log(post);
+    if (!post || !post.creator) return;
 
-    if (post.creator._id === session?.user.id) return router.push("/profile");
-
-    router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
+    if (post.creator._id === session?.user.id) {
+      router.push("/profile");
+    } else {
+      router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
+    }
   };
 
   const handleCopy = () => {
@@ -25,6 +27,10 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
     navigator.clipboard.writeText(post.prompt);
     setTimeout(() => setCopied(false), 3000);
   };
+
+  if (!post || !post.creator) {
+    return <div>Loading...</div>; // or any other fallback UI for when data is not yet available
+  }
 
   return (
     <div className="prompt_card">
@@ -34,7 +40,7 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
           onClick={handleProfileClick}
         >
           <Image
-            src={post.creator.image}
+            src={post.creator.image || "/path/to/default/image.png"}
             alt="user_image"
             width={40}
             height={40}
@@ -43,10 +49,10 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
 
           <div className="flex flex-col">
             <h3 className="font-satoshi font-semibold text-gray-900">
-              {post.creator.username}
+              {post.creator.username || "Unknown"}
             </h3>
             <p className="font-inter text-sm text-gray-500">
-              {post.creator.email}
+              {post.creator.email || "No email available"}
             </p>
           </div>
         </div>

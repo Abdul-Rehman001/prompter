@@ -6,11 +6,11 @@ export const GET = async (request) => {
     await connectToDB();
 
     const prompts = await Prompt.find({}).populate("creator");
-    console.log("API prompts:", prompts); // Add this line
+    console.log("API prompts:", prompts); // Log prompts to check data structure
 
     return new Response(JSON.stringify(prompts), { status: 200 });
   } catch (error) {
-    console.error("API error:", error); // Add this line
+    console.error("API error:", error);
     return new Response("Failed to fetch all prompts", { status: 500 });
   }
 };

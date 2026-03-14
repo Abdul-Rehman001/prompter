@@ -12,7 +12,13 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
-      // Add other patterns as needed
+      {
+        protocol: "https",
+        hostname: "picsum.photos",
+        port: "",
+        pathname: "/**",
+      },
+      // You can add more patterns here for other image sources
     ],
   },
   webpack(config) {
