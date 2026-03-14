@@ -144,9 +144,7 @@ const Feed = () => {
         <a
           className="text-emerald-700 font-bold px-2"
           href="https://chatgpt.com/"
-        >
-          ChatGpt
-        </a>
+        >ChatGpt</a>
       </p>
 
       {/* All Prompts */}
